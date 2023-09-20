@@ -1,12 +1,13 @@
 import pytest
-from selene.support.shared import browser
+from selene import browser
 
 
-@pytest.fixture(scope="session")
-def user():
-    print("тоже выполняюсь перед тестом")
+@pytest.fixture(scope="function", autouse=True)
+def browser_size():
+    browser.config.window_width = 1280
+    browser.config.window_height = 1000
     yield
-    print("выполняюсь после теста тоже")
+    browser.quit()
 
 
-browser.open('https://google.com')
+
